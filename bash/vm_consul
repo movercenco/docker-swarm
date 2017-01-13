@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+docker-machine create -d virtualbox consul
+
+eval $(docker-machine env consul)
+
+docker-compose -f docker-compose-consul.yml up -d

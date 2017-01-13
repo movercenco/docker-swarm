@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+export CONSUL_IP=$(docker-machine ip consul)
+
+hosts=(swarm-master nginx mysql app-server-1 app-server-2)
+
+for host in ${hosts[@]}; do
+	eval $(docker-machine env ${host})
+	export RE_HOST_NAME=${host}
+	docker-compose -f docker-compose-registrator.yml up -d
+done

@@ -1,0 +1,10 @@
+version: "2"
+services:
+  registrator:
+    command: consul://${CONSUL_IP}:8500
+    image: gliderlabs/registrator:latest
+    hostname: ${RE_HOST_NAME}
+    environment:
+      - "consul=${CONSUL_IP}"
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
