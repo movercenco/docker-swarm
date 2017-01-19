@@ -101,4 +101,3 @@ $ docker-compose -f docker-compose.yml scale php=2
 
 2. MySql [Master/Slave]
 
-3. ...
