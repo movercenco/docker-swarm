@@ -3,10 +3,7 @@ services:
   haproxy:
     build: ./haproxy
     environment:
-      - "consul=${CONSUL_IP}"
       - "constraint:host==nginx"
-    volumes:
-      - ./app:/src
     networks:
       - app
     extra_hosts:
@@ -27,20 +24,6 @@ services:
       - app
     depends_on:
       - haproxy
-
-  php:
-    image: php:7-fpm
-    environment:
-      - "constraint:host==app-server"
-      - "SERVICE_NAME=app"
-      - "SERVICE_TAGS=php"
-    volumes:
-      - ./app:/src
-    ports:
-      - 9000:9000
-    networks:
-      - app
-
   mysql:
     image: mariadb
     environment:
@@ -50,10 +33,9 @@ services:
       - "MYSQL_ROOT_PASSWORD=root"
       - "MYSQL_DATABASE=root"
     ports:
-      - 80:80
+      - 3306:3306
     networks:
       - app
-
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     links:
@@ -67,6 +49,17 @@ services:
       - "PMA_HOST=mysql"
     networks:
       - app
-
+  php:
+    image: php:7-fpm
+    environment:
+      - "constraint:host==app-server"
+      - "SERVICE_NAME=app"
+      - "SERVICE_TAGS=php"
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./app:/src
+    networks:
+      - app
 networks:
   app:

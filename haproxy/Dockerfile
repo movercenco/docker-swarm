@@ -12,6 +12,5 @@ RUN ( wget --no-check-certificate https://releases.hashicorp.com/consul-template
 COPY haproxy.json /tmp/haproxy.json
 COPY haproxy.ctmpl /tmp/haproxy.ctmpl
 COPY start.sh /usr/bin/start.sh
-COPY hosts.sh /tmp/hosts.sh
 
-ENTRYPOINT ["/usr/bin/start.sh", "/tmp/hosts.sh"]
+ENTRYPOINT ["/usr/bin/start.sh"]
