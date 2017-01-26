@@ -8,6 +8,7 @@ docker-machine create \
     --swarm-discovery="consul://$(docker-machine ip consul):8500"\
     --engine-opt="cluster-store=consul://$(docker-machine ip consul):8500" \
     --engine-opt="cluster-advertise=eth1:2376" \
+    --engine-insecure-registry $(docker-machine ip registry):5000 \
     swarm-master
 
 # vm nginx
@@ -18,6 +19,7 @@ docker-machine create \
     --engine-opt="cluster-store=consul://$(docker-machine ip consul):8500" \
     --engine-opt="cluster-advertise=eth1:2376" \
     --engine-label host=nginx \
+    --engine-insecure-registry $(docker-machine ip registry):5000 \
     nginx
 
 # vm mysql
@@ -28,6 +30,7 @@ docker-machine create \
     --engine-opt="cluster-store=consul://$(docker-machine ip consul):8500" \
     --engine-opt="cluster-advertise=eth1:2376" \
     --engine-label host=mysql \
+    --engine-insecure-registry $(docker-machine ip registry):5000 \
     mysql
 
 # vm app server 1 and 2
@@ -40,5 +43,6 @@ do
       --engine-opt="cluster-store=consul://$(docker-machine ip consul):8500" \
       --engine-opt="cluster-advertise=eth1:2376" \
       --engine-label host=app-server \
+      --engine-insecure-registry $(docker-machine ip registry):5000 \
       app-server-$i
 done

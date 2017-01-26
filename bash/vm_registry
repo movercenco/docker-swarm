@@ -1,7 +1,19 @@
 #!/usr/bin/env bash
 
-docker-machine create -d virtualbox registry
+# create vm registry
+docker-machine create \
+    -d virtualbox \
+    --engine-insecure-registry localhost:5000 \
+    registry
 
+# set env registry
 eval $(docker-machine env registry)
 
+# replace insecure-registry value
+docker-machine ssh registry 'sudo sed -i "s/localhost/'$(docker-machine ip registry)'/g" /var/lib/boot2docker/profile'
+
+# restart docker daemon
+docker-machine ssh registry 'sudo /etc/init.d/docker restart'
+
+# up registry
 docker-compose -f docker-compose-registry.yml up -d

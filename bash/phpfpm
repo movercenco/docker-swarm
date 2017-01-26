@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-eval $(docker-machine env -swarm swarm-master)
-
-docker cp ./app $1:/src
-
-docker cp ./phpfpm $1:/tmp
-
-docker exec -ti $1 bash -c "cd /tmp/phpfpm && ./bin.sh"

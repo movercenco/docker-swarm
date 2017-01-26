@@ -7,6 +7,11 @@ SetUp consul:
 $ ./bash/vm_consul
 ```
 
+SetUp registry:
+```
+$ ./bash/wm_registry
+```
+
 SetUp swarm:
 ```
 $ ./bash/vm_swarm
@@ -14,35 +19,41 @@ $ ./bash/vm_swarm
 
 SetUp registrator:
 ```
-$ ./bash/registrator_up
+$ ./bash/up_registrator
+```
+
+Build images:
+```
+$ ./bash/build_images
 ```
 
 SetUp app:
 ```
-$ ./bash/conpose
+$ ./bash/up_compose
+```
+
+Scale app:
+```
+$ ./bash/scale_app (Ex: 1 || 2)
 ```
 
 Open app in browser:
 ```
 $ docker-machine ls
 NAME           ACTIVE   DRIVER       STATE     URL                         SWARM                   DOCKER    ERRORS
-app-server-1   -        virtualbox   Running   tcp://192.168.99.104:2376   swarm-master            v1.13.0
-app-server-2   -        virtualbox   Running   tcp://192.168.99.105:2376   swarm-master            v1.13.0
+app-server-1   -        virtualbox   Running   tcp://192.168.99.105:2376   swarm-master            v1.13.0
+app-server-2   -        virtualbox   Running   tcp://192.168.99.106:2376   swarm-master            v1.13.0
 consul         -        virtualbox   Running   tcp://192.168.99.100:2376                           v1.13.0
-mysql          -        virtualbox   Running   tcp://192.168.99.103:2376   swarm-master            v1.13.0
-nginx          -        virtualbox   Running   tcp://192.168.99.102:2376   swarm-master            v1.13.0
-swarm-master   -        virtualbox   Running   tcp://192.168.99.101:2376   swarm-master (master)   v1.13.0
+mysql          -        virtualbox   Running   tcp://192.168.99.104:2376   swarm-master            v1.13.0
+nginx          -        virtualbox   Running   tcp://192.168.99.103:2376   swarm-master            v1.13.0
+registry       *        virtualbox   Running   tcp://192.168.99.101:2376                           v1.13.0
+swarm-master   -        virtualbox   Running   tcp://192.168.99.102:2376   swarm-master (master)   v1.13.0```
 ```
 
 In this case I have:
-- App 'http://192.168.99.102:8080/index.php'
+- App 'http://192.168.99.103:8080/web/app.php'
 - Consul interface 'http://192.168.99.100:8500'
-- PhpMyAdmin 'http://192.168.99.103:8181'
-
-Scale: 
-```
-$ docker-compose scale php=2
-```
+- PhpMyAdmin 'http://192.168.99.104:8181'
 
 # Single machine:
 
@@ -74,7 +85,5 @@ $ docker-compose scale php=2
 
 # ToDo
 
-1. Add docker registry
-1. Fix scale proablem
-2. MySql [Master/Slave]
-3. Make a fork for single machine config
+1. MySql [Master/Slave]
+2. Make a fork for single machine config

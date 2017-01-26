@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+export CONSUL_IP=$(docker-machine ip consul)
+
+export REGISTRY_IP=$(docker-machine ip registry)
+
+# set env
+eval $(docker-machine env -swarm swarm-master)
+
+# scale app
+docker-compose scale php=$1
